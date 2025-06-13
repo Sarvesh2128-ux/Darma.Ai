@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8" />
     <title>Contact Us - Derma.AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
@@ -15,7 +18,7 @@
             justify-content: center;
             color: #2c3e50;
         }
-        
+
         .container {
             width: 1000px;
             background-color: white;
@@ -25,7 +28,6 @@
         }
 
         h1 {
-            color: #2c3e50;
             text-align: center;
             margin-bottom: 30px;
             font-size: 2.2em;
@@ -64,7 +66,6 @@
         }
 
         .contact-method h3 {
-            color: #2c3e50;
             font-size: 1.2em;
             margin-bottom: 10px;
             display: flex;
@@ -98,26 +99,16 @@
             transform: translateY(-3px);
         }
 
-        .contact-form {
+        form#contact-form {
+            background-color: #fff;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
-            color: #2c3e50;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        form#contact-form input,
+        form#contact-form select,
+        form#contact-form textarea {
             padding: 12px;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
@@ -126,19 +117,19 @@
             font-family: inherit;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
+        form#contact-form input:focus,
+        form#contact-form select:focus,
+        form#contact-form textarea:focus {
             border-color: #3498db;
+            outline: none;
         }
 
-        .form-group textarea {
+        form#contact-form textarea {
             min-height: 150px;
             resize: vertical;
         }
 
-        .submit-button {
+        form#contact-form button {
             padding: 12px 24px;
             background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             color: white;
@@ -152,9 +143,21 @@
             align-self: flex-start;
         }
 
-        .submit-button:hover {
+        form#contact-form button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(52, 152, 219, 0.3);
+        }
+
+        #form-status {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            color: #27ae60;
+            background-color: #d4edda;
+            border: 1.5px solid #27ae60;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
         }
 
         .button-container {
@@ -173,7 +176,6 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
             text-decoration: none;
             display: inline-block;
@@ -194,71 +196,74 @@
                 grid-template-columns: 1fr;
             }
 
-            .submit-button {
+            form#contact-form button {
                 width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Contact Us</h1>
-        
-        <div class="contact-grid">
-            <div class="contact-info">
-                <div class="contact-method">
-                    <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
-                    <p>123 Innovation Drive<br>New York, NY 10001<br>United States</p>
-                </div>
-                <div class="contact-method">
-                    <h3><i class="fas fa-envelope"></i> Email</h3>
-                    <p>contact@derma.ai<br>support@derma.ai</p>
-                </div>
-                <div class="contact-method">
-                    <h3><i class="fas fa-phone"></i> Phone</h3>
-                    <p>+1 (555) 123-4567<br>Mon - Fri, 9:00 - 18:00 EST</p>
-                </div>
-                <div class="contact-method">
-                    <h3><i class="fas fa-comments"></i> Social Media</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                    </div>
+
+<div class="container">
+    <h1>Contact Us</h1>
+
+    <div class="contact-grid">
+        <div class="contact-info">
+            <div class="contact-method">
+                <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+                <p>Sukhsagar Nagar<br>Katraj 411046<br>India</p>
+            </div>
+            <div class="contact-method">
+                <h3><i class="fas fa-envelope"></i> Email</h3>
+                <p>contact@derma.ai<br>support@derma.ai</p>
+            </div>
+            <div class="contact-method">
+                <h3><i class="fas fa-phone"></i> Phone</h3>
+                <p>+91-5559960321<br>Monday - Friday <br>9:00 - 18:00 GMT+5:30</p>
+            </div>
+            <div class="contact-method">
+                <h3><i class="fas fa-comments"></i> Social Media</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
                 </div>
             </div>
-
-            <form class="contact-form">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required placeholder="Enter your email address">
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <select id="subject" name="subject" required>
-                        <option value="">Select a subject</option>
-                        <option value="general">General Inquiry</option>
-                        <option value="technical">Technical Support</option>
-                        <option value="partnership">Partnership Opportunity</option>
-                        <option value="feedback">Product Feedback</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required placeholder="Type your message here..."></textarea>
-                </div>
-                <button type="submit" class="submit-button">Send Message</button>
-            </form>
         </div>
 
-        <div class="button-container">
-            <a href="/" class="back-button">Back to Home</a>
-        </div>
+        <form id="contact-form">
+            <input type="text" name="name" placeholder="Name" required />
+            <input type="email" name="email" placeholder="Email Address" required />
+            <textarea name="message" placeholder="Type your message here..." required></textarea>
+            <button type="submit">Send Message</button>
+            <div id="form-status">Thank you! Your message has been sent successfully.</div>
+        </form>
     </div>
+
+    <div class="button-container">
+        <a href="/" class="back-button">Back to Home</a>
+    </div>
+</div>
+
+<script>
+    (function () {
+        emailjs.init("fXLufBXZT9Bh72W-t"); // Your actual public key here
+    })();
+
+    document.getElementById('contact-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        emailjs.sendForm('service_prkjs0m', 'template_n8v5eld', this)
+            .then(function () {
+                document.getElementById('form-status').style.display = 'block';
+            }, function (error) {
+                alert('Oops! Failed to send message: ' + error.text);
+            });
+
+        this.reset();
+    });
+</script>
+
 </body>
-</html> 
+</html>
